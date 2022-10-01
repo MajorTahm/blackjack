@@ -32,12 +32,12 @@ Object.values(CardRank).forEach((rank) => {
 })
 loader.add('back','assets/PNG/Cards/cardBack_blue1.png');
 loader.add('crossButton','assets/uipack_fixed/PNG/red_cross.png');
-loader.add('dealButton', 'src/assets/uipack_fixed/PNG/red_checkmark.png');
-loader.add('hit', 'src/assets/hitmarker.png');
-loader.add('stand', 'src/assets/stando.png');
-loader.add('pog', 'src/assets/pog.png');
-loader.add('nowin', 'src/assets/nowin.png');
-loader.add('draw', 'src/assets/draw.png');
+loader.add('dealButton', 'assets/uipack_fixed/PNG/red_checkmark.png');
+loader.add('hit', 'assets/hitmarker.png');
+loader.add('stand', 'assets/stando.png');
+loader.add('pog', 'assets/pog.png');
+loader.add('nowin', 'assets/nowin.png');
+loader.add('draw', 'assets/draw.png');
 
 // when loader is ready
 loader.load(() => {
