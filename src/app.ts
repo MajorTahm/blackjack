@@ -14,7 +14,8 @@ const CENTER = SIZE / 2;
 // create and append app
 const app = new Application({
   resolution: window.devicePixelRatio || 1,
-  resizeTo: window,
+  width: 1280,
+  height: 720,
   backgroundColor: 0x1099bb, // light blue
   sharedTicker: true,
   sharedLoader: true,
@@ -24,14 +25,19 @@ const loader = Loader.shared;
 const ticker = Ticker.shared;
 
 // // preload needed assets
-// loader.add("aceOfSpades", "assets/PNG/Cards/cardSpadesA.png");
-// loader.add("aceOfHearts", "assets/PNG/Cards/cardHeartsA.png");
 Object.values(CardRank).forEach((rank) => {
   Object.values(CardSuit).forEach((suit) => {
     loader.add(suit + rank, `assets/PNG/Cards/card${suit}${rank}.png`)
   })
 })
-loader.add('back','assets/PNG/Cards/cardBack_blue1.png')
+loader.add('back','assets/PNG/Cards/cardBack_blue1.png');
+loader.add('crossButton','assets/uipack_fixed/PNG/red_cross.png');
+loader.add('dealButton', 'src/assets/uipack_fixed/PNG/red_checkmark.png');
+loader.add('hit', 'src/assets/hitmarker.png');
+loader.add('stand', 'src/assets/stando.png');
+loader.add('pog', 'src/assets/pog.png');
+loader.add('nowin', 'src/assets/nowin.png');
+loader.add('draw', 'src/assets/draw.png');
 
 // when loader is ready
 loader.load(() => {
@@ -45,21 +51,11 @@ loader.load(() => {
   const resizeBoard = () => {
     const scale = Math.min(window.innerHeight/ 1920, window.innerWidth / 1080)
 
-    board.setTransform(window.innerWidth/2, window.innerHeight/2, scale, scale)
+    board.setTransform(400, 400, scale, scale)
   }
   resizeBoard()
 
   window.addEventListener('resize', resizeBoard)
-
-  board.stackDeck();
-  board.shuffleDeck();
-
-  board.dealToPlayer();
-  board.dealToPlayer();
-
-  console.log(board.cardsInDeck)
-
-  
 
   // animate hero each "tick": go left or right continuously
   ticker.add(() => {

@@ -17,4 +17,6 @@ export enum CardRank {
   Ace='A'
 }
 
-export type CardValue = `${CardSuit}${CardRank}`
+export type CardName = `${CardSuit}${CardRank}`
+
+export type Target = 'player' | 'dealer'
