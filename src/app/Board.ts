@@ -114,7 +114,6 @@ export default class Board extends Container {
         this.nextRoundButton.setTransform(0, -100, 2, 2);
         this.nextRoundButton.on ('pointerdown', () => {
             this.clearHands();
-            this.confirmBetButton.interactive = true;
             this.raiseBetButton.interactive = true;
             this.removeChild(this.nextRoundButton);
 
