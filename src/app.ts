@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable import/prefer-default-export */
+import { autorun } from "mobx";
 import { Application, Loader, Resource, Text, Texture, Ticker } from "pixi.js";
 import Board from "./app/Board";
-import Card from "./app/Card";
+import BoardBeta from "./app/BoardBeta";
+import { player1 } from "./lib/states/PlayerState";
 import { CardRank, CardSuit } from "./types";
 
 
@@ -12,7 +14,7 @@ const CENTER = SIZE / 2;
 
 
 // create and append app
-const app = new Application({
+export const app = new Application({
   resolution: window.devicePixelRatio || 1,
   width: 1280,
   height: 720,
@@ -46,7 +48,7 @@ loader.load(() => {
   app.stage.addChild(fps);
 
   // create and append hero
-  const board = new Board(loader)
+  const board = new BoardBeta(player1);
   app.stage.addChild(board)
   const resizeBoard = () => {
     const scale = Math.min(window.innerHeight/ 1920, window.innerWidth / 1080)
@@ -56,6 +58,10 @@ loader.load(() => {
   resizeBoard()
 
   window.addEventListener('resize', resizeBoard)
+
+  autorun(() => {
+    board.renderPlayerHand(player1);
+  })
 
   // animate hero each "tick": go left or right continuously
   ticker.add(() => {
