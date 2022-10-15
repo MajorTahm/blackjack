@@ -47,13 +47,17 @@ export default class BoardBeta extends Container {
 
 
     renderPlayerHand(tar: PlayerState) {
-        this.playerHand.removeChildren();
-        tar.mainCards.forEach((card) => {
-            console.log(this.playerHand.children)
-            card.setTransform((tar.mainCards.length * card.width/2),(-tar.mainCards.length * card.height/4));
-            this.playerHand.addChild(card);
-            this.playerHand.sortChildren();
-        })
+        if (tar.mainCards.length === 0) return;
+        const card = tar.mainCards.at(-1)!
+        this.playerHand.addChild(card);
+        card.setTransform((tar.mainCards.length * card.width/2),(-tar.mainCards.length * card.height/4));
+        // this.playerHand.removeChildren();
+        // tar.mainCards.forEach((card) => {
+        //     console.log(this.playerHand.children)
+        //     card.setTransform((tar.mainCards.length * card.width/2),(-tar.mainCards.length * card.height/4));
+        //     this.playerHand.addChild(card);
+        //     this.playerHand.sortChildren();
+        // })
         // console.log(this.playerHand.children)
     }
 }
