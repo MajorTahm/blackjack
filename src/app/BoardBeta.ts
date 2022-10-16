@@ -2,6 +2,7 @@ import { Container, Loader, Resource, Sprite, Texture } from "pixi.js";
 import { PlayerState } from "../lib/states/PlayerState";
 import { CardRank, CardSuit } from "../types";
 import Card from "../app/Card"
+import Button from "./Button";
 
 export default class BoardBeta extends Container {
 
@@ -20,14 +21,14 @@ export default class BoardBeta extends Container {
 
         this.cardsInDeck = [];
         
-        this.addCardButton = new Sprite(Loader.shared.resources.hit.texture as Texture<Resource>);
+        this.addCardButton = new Button('Add Card');
+        this.addCardButton.setTransform(-200,0,2,2)
         this.addCardButton.interactive = true;
         this.addCardButton.buttonMode = true;
         this.addCardButton.on('pointerdown', ()=> {
             player.addMainCard(this.cardsInDeck.pop()!);
             console.log(player.mainCards)
         })
-        this.addCardButton.setTransform(-200, -200, 0.1, 0.1)
         this.addChild(this.addCardButton);
         
         this.stackDeck();

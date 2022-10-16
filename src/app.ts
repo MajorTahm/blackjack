@@ -26,6 +26,9 @@ document.body.appendChild(app.view);
 const loader = Loader.shared;
 const ticker = Ticker.shared;
 
+//resizer
+
+
 // // preload needed assets
 Object.values(CardRank).forEach((rank) => {
   Object.values(CardSuit).forEach((suit) => {
@@ -40,6 +43,7 @@ loader.add('stand', 'assets/stando.png');
 loader.add('pog', 'assets/pog.png');
 loader.add('nowin', 'assets/nowin.png');
 loader.add('draw', 'assets/draw.png');
+loader.add('defaultButton', 'assets/uipack_fixed/PNG/blue_button04.png')
 
 // when loader is ready
 loader.load(() => {

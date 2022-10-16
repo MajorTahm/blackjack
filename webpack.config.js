@@ -7,6 +7,7 @@ const webpack = require("webpack");
 const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 
 module.exports = {
   mode: "development",
@@ -22,11 +23,16 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: "Pixi / Typescript seed",
     }),
+    new HtmlWebpackTagsPlugin({ tags: ['style.css'], append: true }),
     new CopyPlugin({
       patterns: [
         {
-          from: "./assets",
-          to: "./assets",
+          from: './assets',
+          to: './assets',
+        },
+        {
+          from: './style.css',
+          to: './style.css',
         },
       ],
     }),
