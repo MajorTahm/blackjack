@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable no-useless-constructor */
 import { Container, Loader, Resource, Sprite, Texture, Text, TextStyle } from "pixi.js";
-import { PlayerState } from "../lib/states/PlayerState";
 import { CardRank, CardSuit, Target } from "../types";
 import Card from "./Card";
 
@@ -47,7 +46,7 @@ export default class Board extends Container {
 
     nextRoundButton: Sprite;
 
-    constructor(loader: Loader, player: PlayerState){
+    constructor(loader: Loader){
         super()
         this.loader = loader;
         this.roundInPlay = false;

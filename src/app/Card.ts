@@ -1,5 +1,7 @@
-import { Sprite, Texture, Resource, Loader } from "pixi.js";
+
+import { Sprite, Texture, Resource } from "pixi.js";
 import { CardName, CardRank, CardSuit } from "../types";
+
 
 export interface ICard {
     faceUp: boolean,
@@ -16,15 +18,13 @@ export default class Card extends Sprite implements ICard {
 
     cardRank: CardRank;
 
-    private loader: Loader;
-
-    constructor(texture: Texture<Resource>, cardSuit: CardSuit, cardRank: CardRank, loader: Loader){
+    constructor(texture: Texture<Resource>, cardSuit: CardSuit, cardRank: CardRank){
         super(texture)
 
         this.faceUp = true
         this.cardSuit = cardSuit
         this.cardRank = cardRank
-        this.loader = loader
+
 
         this.anchor.set(0.5)
     }
@@ -58,12 +58,14 @@ export default class Card extends Sprite implements ICard {
     flip(): void {
          if (this.faceUp) {
             this.faceUp = false;
-            this.texture = this.loader.resources.back.texture as Texture<Resource>;
+            // @ts-ignore
+            this.texture = this.cardBundle.cardBack_blue1.png as Texture;
             console.log(`flipped ${this.cardName} now it should be facedown`)
             return;
          }
             this.faceUp = true;
-            this.texture = this.loader.resources[this.cardSuit+this.cardRank].texture as Texture<Resource>;
+            // @ts-ignore
+            this.texture = this.cardBundle[`${this.cardSuit}${this.cardRank}`] as Texture<Resource>;
             console.log(`flipped ${this.cardName} now it should be faceup`)
 
             // 01.10.2022 kogda nibud ya ee perepishu :)

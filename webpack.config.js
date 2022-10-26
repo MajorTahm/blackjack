@@ -22,6 +22,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: "Pixi / Typescript seed",
+      template: 'template.ejs'
     }),
     new HtmlWebpackTagsPlugin({ tags: ['style.css'], append: true }),
     new CopyPlugin({

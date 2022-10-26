@@ -24,6 +24,8 @@
     "seed"
   ],
   "dependencies": {
+    "@pixi/assets": "^6.5.6",
+    "glob": "^8.0.3",
     "html-webpack-tags-plugin": "^3.0.2",
     "mobx": "^6.6.2",
     "pixi.js": "^6.5.6",
