@@ -44,6 +44,13 @@ export default class Table extends Container {
 
         this.addChild(this.dealer);
 
-        this.playerSeat = new Seat;
+        this.playerSeat = new Seat();
+        this.playerSeat.setTransform(
+            (this.tableTexture.width/2) - 80,
+            this.tableTexture.height/2,
+            0.8,
+            0.8
+        )
+        this.addChild(this.playerSeat);
     }
 }

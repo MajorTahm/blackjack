@@ -55,4 +55,4 @@ export class PlayerState {
     }
 }
 
-export const player1 = new PlayerState;
+export const player1 = new PlayerState();

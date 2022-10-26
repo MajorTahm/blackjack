@@ -1,4 +1,5 @@
 import { Assets } from "@pixi/assets";
+import { autorun } from "mobx";
 import { Container, Sprite, Text } from "pixi.js";
 import { player1 } from "../../lib/states/PlayerState";
 
@@ -99,5 +100,9 @@ export default class MoneyPanel extends Container {
             SCALE
         );
         this.addChild(this.balance);
+
+        autorun(() => {
+            this.balance.text = player1.bank
+        })
     }
 }

@@ -1,6 +1,5 @@
 import { Assets } from "@pixi/assets";
-import { table } from "console";
-import { Container, Sprite, Texture } from "pixi.js";
+import { Container, Sprite } from "pixi.js";
 import { CardRank, CardSuit } from "../../types";
 import Card from "../Card";
 import ScoreBadge from "../ScoreBadge";

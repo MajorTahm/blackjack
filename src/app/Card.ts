@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 
 import { Sprite, Texture, Resource } from "pixi.js";
 import { CardName, CardRank, CardSuit } from "../types";
@@ -60,14 +61,11 @@ export default class Card extends Sprite implements ICard {
             this.faceUp = false;
             // @ts-ignore
             this.texture = this.cardBundle.cardBack_blue1.png as Texture;
-            console.log(`flipped ${this.cardName} now it should be facedown`)
             return;
          }
             this.faceUp = true;
             // @ts-ignore
             this.texture = this.cardBundle[`${this.cardSuit}${this.cardRank}`] as Texture<Resource>;
-            console.log(`flipped ${this.cardName} now it should be faceup`)
-
             // 01.10.2022 kogda nibud ya ee perepishu :)
     }
 }
