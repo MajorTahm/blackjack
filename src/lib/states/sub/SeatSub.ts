@@ -1,4 +1,5 @@
 /* eslint-disable max-classes-per-file */
+import { makeAutoObservable } from "mobx";
 import Card from "../../../app/Card";
 
 function countScore(cards: Card[]) {
@@ -32,6 +33,7 @@ export class SeatSub {
     constructor() {
 
         this.cards = [];
+        makeAutoObservable(this);
     }
     
     get score(): number {
@@ -39,19 +41,21 @@ export class SeatSub {
     }
 }
 
-export class PlayerSeatSub extends SeatSub {
+export class PlayerSeatSub {
+    cards: Card[];
+
     cardsOff: Card[];
 
     handIsSplit: boolean;
 
     constructor() {
-        super();
 
         this.handIsSplit = false;
 
         this.cards = [];
 
         this.cardsOff = [];
+        makeAutoObservable(this);
     }
 
     get score(): number {

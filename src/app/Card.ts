@@ -60,12 +60,12 @@ export default class Card extends Sprite implements ICard {
          if (this.faceUp) {
             this.faceUp = false;
             // @ts-ignore
-            this.texture = this.cardBundle.cardBack_blue1.png as Texture;
+            this.texture = Assets.cache.get('cardBack_red1') as Texture;
             return;
          }
             this.faceUp = true;
             // @ts-ignore
-            this.texture = this.cardBundle[`${this.cardSuit}${this.cardRank}`] as Texture<Resource>;
+            this.texture = texture;
             // 01.10.2022 kogda nibud ya ee perepishu :)
     }
 }

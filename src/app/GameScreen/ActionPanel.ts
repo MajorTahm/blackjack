@@ -1,7 +1,6 @@
 import { Assets } from "@pixi/assets";
 import { Container, Sprite } from "pixi.js";
-import { player1 } from "../../lib/states/PlayerState";
-
+import { app } from "../../app";
 export default class ActionPanel extends Container {
 
     background: Sprite;
@@ -58,7 +57,7 @@ export default class ActionPanel extends Container {
         this.surrenderButton.interactive = true;
         this.surrenderButton.buttonMode = true;
         this.surrenderButton.on('pointerdown', () => {
-            player1.setBank(player1.bank + 100);
+            app.tableState!.dealPlayer();
         })
         this.addChild(this.surrenderButton);
     }

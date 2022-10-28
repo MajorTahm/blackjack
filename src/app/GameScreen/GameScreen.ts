@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { Assets } from "@pixi/assets";
 import { Container, Sprite } from "pixi.js";
-import { makeMenuScreen } from "../../app";
+import { app } from "../../app";
 import ActionPanel from "./ActionPanel";
 import MoneyPanel from "./MoneyPanel";
 import Table from "./Table";
@@ -66,7 +66,7 @@ export default class GameScreen extends Container {
         this.exitButton.buttonMode = true;
         this.exitButton.on('pointerdown', () => {
             this.destroy();
-            makeMenuScreen();
+            app.makeMenuScreen();
         })
         this.addChild(this.exitButton);
 

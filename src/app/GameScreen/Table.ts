@@ -1,6 +1,8 @@
 /* eslint-disable import/no-cycle */
 import { Assets } from "@pixi/assets";
+import { autorun } from "mobx";
 import { Container, Sprite, Text } from "pixi.js";
+import { app } from "../../app";
 import Dealer from "./Dealer";
 import Seat from "./Seat";
 
@@ -12,7 +14,7 @@ export default class Table extends Container {
 
     rules: Text;
 
-    dealer: Container;
+    dealerSeat: Container;
     
     playerSeat: Seat;
 
@@ -33,16 +35,16 @@ export default class Table extends Container {
 
         this.rules = new Text('TODO dealer must draw to 16...')
 
-        this.dealer = new Dealer;
-        this.dealer.setTransform(
+        this.dealerSeat = new Dealer;
+        this.dealerSeat.setTransform(
             (this.tableTexture.width/2) - 80,
-            this.dealer.height/6,
+            this.dealerSeat.height/6,
             0.8,
             0.8
         )
-        this.addChild(this.dealer);
+        this.addChild(this.dealerSeat);
 
-        this.addChild(this.dealer);
+        this.addChild(this.dealerSeat);
 
         this.playerSeat = new Seat();
         this.playerSeat.setTransform(
@@ -52,5 +54,24 @@ export default class Table extends Container {
             0.8
         )
         this.addChild(this.playerSeat);
+
+        autorun(() => {
+            const playerCards = app.tableState!.playerSeat.cards;
+            console.log(playerCards.length)
+
+            if (playerCards.length) {
+                this.playerSeat.hand.removeChildren();
+                playerCards.forEach((card) => {
+                    card.setTransform(
+                        card.width/2*playerCards.indexOf(card),
+                        card.height/2*playerCards.indexOf(card),
+                    )
+                this.playerSeat.hand.addChild(card)
+                console.log('tried to add a card')
+            })  
+            }
+            console.log('fired render for plaeyer hand')
+            console.log(this.playerSeat.hand)
+        })
     }
 }

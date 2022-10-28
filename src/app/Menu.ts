@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { Assets } from "@pixi/assets";
 import { Container, Sprite } from "pixi.js";
-import { makeGameScreen } from "../app";
+import { app } from "../app";
 import PlayerPanel from "./PlayerPanel";
 
 const SCALE = 0.7;
@@ -46,7 +46,7 @@ export default class Menu extends Container {
         this.PlayButton.interactive = true;
         this.PlayButton.on('pointerdown', () => {
             this.destroy();
-            makeGameScreen();
+            app.makeGameScreen();
         })
         this.addChild(this.PlayButton);
 

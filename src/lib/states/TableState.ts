@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+import { Assets } from "@pixi/assets";
 import { makeAutoObservable } from "mobx";
 import Card from "../../app/Card";
 import { CardRank, CardSuit } from "../../types";
 import {SeatSub, PlayerSeatSub } from "./sub/SeatSub";
 
-export class TableState {
+export default class TableState {
     
     deckCards: Card[];
 
@@ -35,6 +36,8 @@ export class TableState {
         this.dealerSeat = new SeatSub();
 
         makeAutoObservable(this);
+
+        this.stackDeck();
     }
 
     stackDeck(): void {
@@ -42,9 +45,10 @@ export class TableState {
             Object.values(CardSuit).forEach((suit) => {
             // @ts-ignore
                 
-              this.deckCards.push(new Card(this.loader.resources[suit+rank].texture as Texture<Resource>, suit, rank, this.loader))
+              this.deckCards.push(new Card(Assets.cache.get(`card${[suit+rank]}`), suit, rank))
             })
           })
+          console.log(this.deckCards)
     }
     
     shuffleDeck(): void {
@@ -56,17 +60,15 @@ export class TableState {
     }
     // TODO: cringe
 
-    dealPlayer(): Card | undefined {
+    dealPlayer(): void{
         if (!this.deckCards.length) {
             throw new Error('deck is empty');
-            return undefined;
+            return;
         }
 
         const currentCard = this.deckCards.pop()!;
 
         this.playerSeat.cards.push(currentCard);
-        return currentCard;
+        console.log(this.playerSeat.cards);
     }
 }
-
-export const tableState = new TableState();
