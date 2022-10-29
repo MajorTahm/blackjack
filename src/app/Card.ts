@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
+import { Assets } from "@pixi/assets";
 import { Sprite, Texture, Resource } from "pixi.js";
 import { CardName, CardRank, CardSuit } from "../types";
 
 
 export interface ICard {
-    faceUp: boolean,
     cardSuit: CardSuit,
     cardRank: CardRank,
     cardName: CardName,
@@ -13,19 +13,19 @@ export interface ICard {
 }
 
 export default class Card extends Sprite implements ICard {
-    faceUp: boolean;
 
     cardSuit: CardSuit;
 
     cardRank: CardRank;
 
+    faceCache: Texture;
+
     constructor(texture: Texture<Resource>, cardSuit: CardSuit, cardRank: CardRank){
         super(texture)
 
-        this.faceUp = true
         this.cardSuit = cardSuit
         this.cardRank = cardRank
-
+        this.faceCache = texture;
 
         this.anchor.set(0.5)
     }
@@ -57,15 +57,10 @@ export default class Card extends Sprite implements ICard {
     }
 
     flip(): void {
-         if (this.faceUp) {
-            this.faceUp = false;
-            // @ts-ignore
-            this.texture = Assets.cache.get('cardBack_red1') as Texture;
+        if (this.texture === this.faceCache) {
+            this.texture = Assets.cache.get('cardBack_red1');
             return;
-         }
-            this.faceUp = true;
-            // @ts-ignore
-            this.texture = texture;
-            // 01.10.2022 kogda nibud ya ee perepishu :)
+        }
+        this.texture = this.faceCache;
     }
 }

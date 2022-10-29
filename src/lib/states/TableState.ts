@@ -73,6 +73,10 @@ export default class TableState {
         }
 
         const currentCard = this.deckCards.pop()!;
+        
+        if (seat.constructor.name === 'SeatSub' && seat.cards.length === 1) {
+            currentCard.flip();
+        }
 
         seat.cards.push(currentCard);
 
