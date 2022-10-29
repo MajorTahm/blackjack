@@ -3,7 +3,6 @@ import { Assets } from "@pixi/assets";
 import { autorun } from "mobx";
 import { Container, Sprite, Text } from "pixi.js";
 import { app } from "../../app";
-import TableState from "../../lib/states/TableState";
 import Dealer from "./Dealer";
 import Seat from "./Seat";
 

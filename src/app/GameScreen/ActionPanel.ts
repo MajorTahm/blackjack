@@ -64,7 +64,7 @@ export default class ActionPanel extends Container {
         this.surrenderButton.interactive = true;
         this.surrenderButton.buttonMode = true;
         this.surrenderButton.on('pointerdown', () => {
-            app.tableState!.dealPlayer();
+            app.tableState!.deal(app.tableState!.playerSeat);
         })
         this.addChild(this.surrenderButton);
     }

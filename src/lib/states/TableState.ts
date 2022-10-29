@@ -5,6 +5,30 @@ import Card from "../../app/Card";
 import { CardRank, CardSuit } from "../../types";
 import {SeatSub, PlayerSeatSub } from "./sub/SeatSub";
 
+const stackDeck = (deckArr: Card[] = []): Card[] => {
+    const deck = deckArr.slice();
+
+    Object.values(CardRank).forEach((rank) => {
+        Object.values(CardSuit).forEach((suit) => {
+        // @ts-ignore
+            
+          deck.push(new Card(Assets.cache.get(`card${[suit+rank]}`), suit, rank))
+        })
+    })
+    return deck;
+}
+
+const shuffleDeck = (deckArr: Card[]): Card[] => {
+    if (!deckArr.length) throw new Error('can`t shuffle an empty deck');
+    
+    const deck = deckArr.slice();
+
+    for (let i = 0; i < 10; i += 1) {
+        deck.sort(() => Math.random() - 0.5)
+    }
+    return deck;
+}
+
 export default class TableState {
     
     deckCards: Card[];
@@ -29,35 +53,16 @@ export default class TableState {
 
     constructor() {
         
-        this.deckCards = [];
+        this.deckCards = shuffleDeck(stackDeck());
         
         this.playerSeat = new PlayerSeatSub();
 
         this.dealerSeat = new SeatSub();
 
         makeAutoObservable(this);
-
-        this.stackDeck();
     }
 
-    stackDeck(): void {
-        Object.values(CardRank).forEach((rank) => {
-            Object.values(CardSuit).forEach((suit) => {
-            // @ts-ignore
-                
-              this.deckCards.push(new Card(Assets.cache.get(`card${[suit+rank]}`), suit, rank))
-            })
-          })
-          console.log(this.deckCards)
-    }
     
-    shuffleDeck(): void {
-        if (!this.deckCards.length) throw new Error('deck is empty');
-        
-        for (let i = 0; i < 10; i += 1) {
-            this.deckCards.sort(() => Math.random() - 0.5)
-        }
-    }
     // TODO: cringe
 
     dealPlayer(): void{
@@ -69,10 +74,27 @@ export default class TableState {
         const currentCard = this.deckCards.pop()!;
 
         this.playerSeat.cards.push(currentCard);
-        console.log(this.playerSeat.cards);
     }
 
     clearPlayer(): void {
         this.playerSeat.cards.length = 0;
+    }
+
+    deal(seat: SeatSub | PlayerSeatSub): void {
+        if (!this.deckCards.length) {
+            throw new Error('deck is empty');
+            return;
+        }
+
+        const currentCard = this.deckCards.pop()!;
+
+        seat.cards.push(currentCard);
+
+        // if 4 or less cards left => stack new deck, shuffle it and add to the state deck
+        if (this.deckCards.length <= 4) {
+            const deck = shuffleDeck(stackDeck());
+
+            this.deckCards = [...this.deckCards, ...deck];
+        }
     }
 }
