@@ -1,3 +1,4 @@
+import { autorun } from "mobx";
 import { Container } from "pixi.js";
 import { PlayerSeatSub, SeatSub } from "../../lib/states/sub/SeatSub";
 import ScoreBadge from "../ScoreBadge";
@@ -32,5 +33,27 @@ export default class Seat extends Container {
             y: this.height/2
         }
         this.addChild(this.scoreBadge);
+
+        autorun(() => {
+            this.renderHand();
+        })
+    }
+
+    renderHand(): void {
+        const {cards} = this.seatState;
+
+            
+            if (cards.length === 0) {
+                this.hand.removeChildren();
+                return;
+            } 
+            this.hand.removeChildren();
+            cards.forEach((card) => {
+                card.setTransform(
+                    card.width/4*cards.indexOf(card),
+                    0 - card.height/8*cards.indexOf(card),
+                )
+                this.hand.addChild(card)
+                })
     }
 }

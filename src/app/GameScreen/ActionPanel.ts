@@ -2,6 +2,7 @@
 import { Assets } from "@pixi/assets";
 import { Container, Sprite } from "pixi.js";
 import { app } from "../../app";
+import { clearHands } from "../../lib/states/TableState";
 
 export default class ActionPanel extends Container {
 
@@ -52,7 +53,7 @@ export default class ActionPanel extends Container {
         this.standButton.interactive = true;
         this.standButton.buttonMode = true;
         this.standButton.on('pointerdown', () => {
-            app.tableState!.clearPlayer();
+            clearHands([app.tableState!.dealerSeat, app.tableState!.playerSeat]);
         })
         this.addChild(this.standButton);
 
@@ -65,6 +66,7 @@ export default class ActionPanel extends Container {
         this.surrenderButton.buttonMode = true;
         this.surrenderButton.on('pointerdown', () => {
             app.tableState!.deal(app.tableState!.playerSeat);
+            app.tableState!.deal(app.tableState!.dealerSeat);
         })
         this.addChild(this.surrenderButton);
     }

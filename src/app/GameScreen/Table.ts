@@ -1,9 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { Assets } from "@pixi/assets";
-import { autorun } from "mobx";
 import { Container, Sprite, Text } from "pixi.js";
 import { app } from "../../app";
-import Dealer from "./Dealer";
 import Seat from "./Seat";
 
 export default class Table extends Container {
@@ -35,10 +33,10 @@ export default class Table extends Container {
 
         this.rules = new Text('TODO dealer must draw to 16...')
 
-        this.dealerSeat = new Dealer;
+        this.dealerSeat = new Seat(app.tableState!.dealerSeat);
         this.dealerSeat.setTransform(
-            (this.tableTexture.width/2) - 80,
-            this.dealerSeat.height/6,
+            (this.tableTexture.width/2),
+            this.dealerSeat.height*2.5,
             0.8,
             0.8
         )
@@ -55,24 +53,6 @@ export default class Table extends Container {
         )
         this.addChild(this.playerSeat);
 
-        autorun(() => {
-            const playerCards = app.tableState!.playerSeat.cards;
-
-            
-            if (playerCards.length === 0) {
-                this.playerSeat.hand.removeChildren();
-                console.log('fired')
-                return;
-            } 
-            this.playerSeat.hand.removeChildren();
-            playerCards.forEach((card) => {
-                card.setTransform(
-                    card.width/4*playerCards.indexOf(card),
-                    0 - card.height/8*playerCards.indexOf(card),
-                )
-                this.playerSeat.hand.addChild(card)
-                })  
-            }
-        )
+        
     }
 }

@@ -29,6 +29,10 @@ const shuffleDeck = (deckArr: Card[]): Card[] => {
     return deck;
 }
 
+export const clearHands = (seats: (PlayerSeatSub|SeatSub)[]): void => {
+        seats.forEach((seat) => {seat.cards.splice(0,seat.cards.length)})
+    }
+
 export default class TableState {
     
     deckCards: Card[];
@@ -60,24 +64,6 @@ export default class TableState {
         this.dealerSeat = new SeatSub();
 
         makeAutoObservable(this);
-    }
-
-    
-    // TODO: cringe
-
-    dealPlayer(): void{
-        if (!this.deckCards.length) {
-            throw new Error('deck is empty');
-            return;
-        }
-
-        const currentCard = this.deckCards.pop()!;
-
-        this.playerSeat.cards.push(currentCard);
-    }
-
-    clearPlayer(): void {
-        this.playerSeat.cards.length = 0;
     }
 
     deal(seat: SeatSub | PlayerSeatSub): void {
