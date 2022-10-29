@@ -3,6 +3,7 @@ import { Assets } from "@pixi/assets";
 import { autorun } from "mobx";
 import { Container, Sprite, Text } from "pixi.js";
 import { app } from "../../app";
+import TableState from "../../lib/states/TableState";
 import Dealer from "./Dealer";
 import Seat from "./Seat";
 
@@ -46,9 +47,9 @@ export default class Table extends Container {
 
         this.addChild(this.dealerSeat);
 
-        this.playerSeat = new Seat();
+        this.playerSeat = new Seat(app.tableState!.playerSeat);
         this.playerSeat.setTransform(
-            (this.tableTexture.width/2) - 80,
+            (this.tableTexture.width/2),
             this.tableTexture.height/2,
             0.8,
             0.8
@@ -57,21 +58,22 @@ export default class Table extends Container {
 
         autorun(() => {
             const playerCards = app.tableState!.playerSeat.cards;
-            console.log(playerCards.length)
 
-            if (playerCards.length) {
+            
+            if (playerCards.length === 0) {
                 this.playerSeat.hand.removeChildren();
-                playerCards.forEach((card) => {
-                    card.setTransform(
-                        card.width/2*playerCards.indexOf(card),
-                        card.height/2*playerCards.indexOf(card),
-                    )
+                console.log('fired')
+                return;
+            } 
+            this.playerSeat.hand.removeChildren();
+            playerCards.forEach((card) => {
+                card.setTransform(
+                    card.width/4*playerCards.indexOf(card),
+                    0 - card.height/8*playerCards.indexOf(card),
+                )
                 this.playerSeat.hand.addChild(card)
-                console.log('tried to add a card')
-            })  
+                })  
             }
-            console.log('fired render for plaeyer hand')
-            console.log(this.playerSeat.hand)
-        })
+        )
     }
 }

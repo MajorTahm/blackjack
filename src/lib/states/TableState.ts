@@ -71,4 +71,8 @@ export default class TableState {
         this.playerSeat.cards.push(currentCard);
         console.log(this.playerSeat.cards);
     }
+
+    clearPlayer(): void {
+        this.playerSeat.cards.length = 0;
+    }
 }

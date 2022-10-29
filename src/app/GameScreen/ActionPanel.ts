@@ -1,6 +1,8 @@
+/* eslint-disable import/no-cycle */
 import { Assets } from "@pixi/assets";
 import { Container, Sprite } from "pixi.js";
 import { app } from "../../app";
+
 export default class ActionPanel extends Container {
 
     background: Sprite;
@@ -47,6 +49,11 @@ export default class ActionPanel extends Container {
         this.standButton.anchor.set(0.5)
         this.standButton.x = this.hitButton.x + this.hitButton.width + 20;
         this.standButton.y = this.doubleButton.y;
+        this.standButton.interactive = true;
+        this.standButton.buttonMode = true;
+        this.standButton.on('pointerdown', () => {
+            app.tableState!.clearPlayer();
+        })
         this.addChild(this.standButton);
 
         this.surrenderButton = new Sprite(Assets.cache.get('button_surr'));

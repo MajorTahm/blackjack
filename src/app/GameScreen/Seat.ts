@@ -1,7 +1,5 @@
-import { Assets } from "@pixi/assets";
-import { autorun } from "mobx";
-import { Container, Sprite } from "pixi.js";
-import { CardRank, CardSuit } from "../../types";
+import { Container } from "pixi.js";
+import { PlayerSeatSub, SeatSub } from "../../lib/states/sub/SeatSub";
 import ScoreBadge from "../ScoreBadge";
 
 export default class Seat extends Container {
@@ -12,20 +10,27 @@ export default class Seat extends Container {
 
     playerBadge: Container;
 
-    score: Container;
+    scoreBadge: Container;
 
-    constructor() {
+    seatState: PlayerSeatSub | SeatSub;
+
+    constructor(seatState: PlayerSeatSub | SeatSub) {
         super()
 
+        this.seatState = seatState;
         this.hand = new Container();
         this.hand.scale.set(0.8, 1)
         this.addChild(this.hand);
         
         this.chips = new Container;
 
-        this.playerBadge = new Container;
+        this.playerBadge = new Container();
 
-        this.score = new ScoreBadge();
-        this.addChild(this.score);
+        this.scoreBadge = new ScoreBadge(seatState);
+        this.scoreBadge.position = {
+            x: -this.scoreBadge.width*2,
+            y: this.height/2
+        }
+        this.addChild(this.scoreBadge);
     }
 }

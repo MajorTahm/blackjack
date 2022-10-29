@@ -48,6 +48,10 @@ export class PlayerSeatSub {
 
     handIsSplit: boolean;
 
+    bet: number;
+
+    betOff: number;
+
     constructor() {
 
         this.handIsSplit = false;
@@ -55,6 +59,11 @@ export class PlayerSeatSub {
         this.cards = [];
 
         this.cardsOff = [];
+
+        this.bet = 0;
+
+        this.betOff = 0;
+        
         makeAutoObservable(this);
     }
 
