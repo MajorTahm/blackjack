@@ -37,23 +37,9 @@ export default class TableState {
     
     deckCards: Card[];
 
-    dealerSeat: {
-        cards: Card[],
+    dealerSeat: SeatSub;
 
-        score: number,
-    };
-
-    playerSeat: {
-        handIsSplit: boolean;
-
-        cards: Card[],
-
-        cardsOff: Card[],
-
-        score: number,
-
-        scoreOff: number,
-    };
+    playerSeat: PlayerSeatSub;
 
     constructor() {
         

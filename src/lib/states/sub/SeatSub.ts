@@ -74,4 +74,12 @@ export class PlayerSeatSub {
     get scoreOff(): number {
         return countScore(this.cardsOff);
     }
+
+    // !!!integrage with PlayerState to check for enough bank money to split!
+    split(): void {
+        if (this.cards.length === 2 && !this.handIsSplit && this.cardsOff.length === 0) {
+            this.handIsSplit = true;
+            this.cardsOff.push(this.cards.pop()!);
+        }
+    }
 }

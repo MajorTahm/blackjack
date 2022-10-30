@@ -10,6 +10,8 @@ export default class Seat extends Container {
     
     hand: Container;
 
+    handOff?: Container;
+
     chips: Container;
 
     playerBadge: Container;
@@ -59,19 +61,45 @@ export default class Seat extends Container {
 
     renderHand(): void {
         const {cards} = this.seatState;
-
             
-            if (cards.length === 0) {
-                this.hand.removeChildren();
-                return;
-            } 
+        if (cards.length === 0) {
             this.hand.removeChildren();
-            cards.forEach((card) => {
+            return;
+        } 
+        this.hand.removeChildren();
+        cards.forEach((card) => {
+            card.setTransform(
+                card.width/4*cards.indexOf(card),
+                0 - card.height/8*cards.indexOf(card),
+            )
+        this.hand.addChild(card)
+        });
+        if (this.handOff) this.handOff.destroy();
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        if (this.seatState.constructor.name === "PlayerSeatSub" && this.seatState.handIsSplit === true) {
+            const {cardsOff} = this.seatState as PlayerSeatSub;
+
+            this.handOff = new Container();
+            this.handOff.removeChildren();
+
+            cardsOff.forEach((card) => {
                 card.setTransform(
-                    card.width/4*cards.indexOf(card),
-                    0 - card.height/8*cards.indexOf(card),
+                    card.width/4*cardsOff.indexOf(card),
+                    0 - card.height/8*cardsOff.indexOf(card),
                 )
-                this.hand.addChild(card)
-                })
+                this.handOff?.addChild(card)
+            })
+            this.handOff.setTransform(
+                this.hand.width + 20,
+                this.hand.y,
+                0.8,
+                1
+            )
+            this.addChild(this.handOff);
+            console.log(this.children);
+        }
+
+        
     }
 }

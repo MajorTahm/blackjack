@@ -29,6 +29,11 @@ export default class ActionPanel extends Container {
         this.splitButton.anchor.set(0.5);
         this.splitButton.x = 200;
         this.splitButton.y = this.background.height*0.5;
+        this.splitButton.interactive = true;
+        this.splitButton.buttonMode = true;
+        this.splitButton.on('pointerdown', () => {
+            app.tableState!.playerSeat.split()
+        })
         this.addChild(this.splitButton);
 
         this.doubleButton = new Sprite(Assets.cache.get('button_double'));
