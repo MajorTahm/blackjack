@@ -1,7 +1,11 @@
+import { Assets } from "@pixi/assets";
 import { makeAutoObservable } from "mobx"
+import { Sprite } from "pixi.js";
 import Card from "../../app/Card"
 
 export class PlayerState {
+    avatar: Sprite;
+
     PlayerName: string
 
     PlayerLevel: number
@@ -19,6 +23,9 @@ export class PlayerState {
     bank: number
 
     constructor() {
+
+        this.avatar = new Sprite(Assets.cache.get('default_avatar_field'));
+
         this.PlayerName = 'John Doe';
 
         this.PlayerLevel = 1;

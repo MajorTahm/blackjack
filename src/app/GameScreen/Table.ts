@@ -2,7 +2,7 @@
 import { Assets } from "@pixi/assets";
 import { Container, Sprite, Text } from "pixi.js";
 import { app } from "../../app";
-import Seat from "./Seat";
+import Seat from "./Seat/Seat";
 
 export default class Table extends Container {
 
@@ -44,7 +44,7 @@ export default class Table extends Container {
 
         this.addChild(this.dealerSeat);
 
-        this.playerSeat = new Seat(app.tableState!.playerSeat);
+        this.playerSeat = new Seat(app.tableState!.playerSeat, app.playerState);
         this.playerSeat.setTransform(
             (this.tableTexture.width/2),
             this.tableTexture.height/2,

@@ -1,7 +1,10 @@
+/* eslint-disable import/no-cycle */
 import { autorun } from "mobx";
 import { Container } from "pixi.js";
-import { PlayerSeatSub, SeatSub } from "../../lib/states/sub/SeatSub";
-import ScoreBadge from "../ScoreBadge";
+import { PlayerState } from "../../../lib/states/PlayerState";
+import { PlayerSeatSub, SeatSub } from "../../../lib/states/sub/SeatSub";
+import Label from "./Label";
+import ScoreBadge from "./ScoreBadge";
 
 export default class Seat extends Container {
     
@@ -15,7 +18,9 @@ export default class Seat extends Container {
 
     seatState: PlayerSeatSub | SeatSub;
 
-    constructor(seatState: PlayerSeatSub | SeatSub) {
+    label?: Label;
+
+    constructor(seatState: PlayerSeatSub | SeatSub, playerState?: PlayerState) {
         super()
 
         this.seatState = seatState;
@@ -33,6 +38,19 @@ export default class Seat extends Container {
             y: this.height/2
         }
         this.addChild(this.scoreBadge);
+
+        if (seatState.constructor.name === `PlayerSeatSub` && playerState) {
+            this.label = new Label(playerState!);
+            this.label.setTransform(
+                0,
+                -this.label.height,
+            )
+            this.label.scale.set(0.8)
+            this.label.position.set( -this.label.width/2, this.height + this.label.height/1.5 )
+            this.addChild(this.label);
+        }
+
+        console.log(this.children)
 
         autorun(() => {
             this.renderHand();

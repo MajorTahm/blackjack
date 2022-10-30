@@ -7,6 +7,7 @@ import { Assets } from "@pixi/assets";
 import { Application, Sprite} from "pixi.js";
 import GameScreen from "./app/GameScreen/GameScreen";
 import Menu from "./app/Menu";
+import { PlayerState } from "./lib/states/PlayerState";
 import TableState from "./lib/states/TableState";
 
 // constants
@@ -15,6 +16,8 @@ const CENTER = SIZE / 2;
 
 export class GameApp extends Application {
   tableState?: TableState;
+  
+  playerState?: PlayerState;
 
   constructor() {
     super({ 
@@ -31,7 +34,7 @@ export class GameApp extends Application {
   async init(): Promise<void> {
     await Assets.init({manifest: "./assets/manifest.json"});
   
-    Assets.backgroundLoadBundle(['Cards','interface_game']);
+    Assets.backgroundLoadBundle(['Cards','interface_game','menu']);
     
     this.makeGameScreen();
     
@@ -56,8 +59,9 @@ export class GameApp extends Application {
   }
   
   async makeGameScreen(): Promise<void> {
-    Assets.loadBundle(['Cards','interface_game']).then(() => {
+    Assets.loadBundle(['Cards','interface_game','menu']).then(() => {
       this.tableState = new TableState();
+      this.playerState = new PlayerState();
       const board = new GameScreen();
       app.stage.addChild(board);
     })

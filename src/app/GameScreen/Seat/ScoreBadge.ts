@@ -1,7 +1,7 @@
 import { Assets } from "@pixi/assets";
 import { autorun } from "mobx";
 import { Container, Sprite, Text } from "pixi.js";
-import { PlayerSeatSub, SeatSub } from "../lib/states/sub/SeatSub";
+import { PlayerSeatSub, SeatSub } from "../../../lib/states/sub/SeatSub";
 
 export default class ScoreBadge extends Container {
     background: Sprite;
