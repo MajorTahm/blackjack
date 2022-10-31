@@ -29,8 +29,6 @@ export default class ActionPanel extends Container {
         this.splitButton.anchor.set(0.5);
         this.splitButton.x = 200;
         this.splitButton.y = this.background.height*0.5;
-        this.splitButton.interactive = true;
-        this.splitButton.buttonMode = true;
         this.splitButton.on('pointerdown', () => {
             app.bus.emit('split');
         })
@@ -51,8 +49,6 @@ export default class ActionPanel extends Container {
         this.hitButton.anchor.set(0.5)
         this.hitButton.x = this.doubleButton.x + this.doubleButton.width + 20;
         this.hitButton.y = this.doubleButton.y;
-        this.hitButton.interactive = true;
-        this.hitButton.buttonMode = true;
         this.hitButton.on('pointerdown', () => {
             app.bus.emit('hit');
         })
@@ -63,8 +59,6 @@ export default class ActionPanel extends Container {
         this.standButton.anchor.set(0.5)
         this.standButton.x = this.hitButton.x + this.hitButton.width + 20;
         this.standButton.y = this.doubleButton.y;
-        this.standButton.interactive = true;
-        this.standButton.buttonMode = true;
         this.standButton.on('pointerdown', () => {
             app.bus.emit('stand');
         })
@@ -75,8 +69,6 @@ export default class ActionPanel extends Container {
         this.surrenderButton.anchor.set(0.5)
         this.surrenderButton.x = this.standButton.x + this.surrenderButton.width - 35;
         this.surrenderButton.y = this.doubleButton.y;
-        this.surrenderButton.interactive = true;
-        this.surrenderButton.buttonMode = true;
         this.surrenderButton.on('pointerdown', () => {
             app.bus.emit('surrender');
         })
