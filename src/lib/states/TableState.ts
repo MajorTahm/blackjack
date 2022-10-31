@@ -73,4 +73,9 @@ export default class TableState {
             this.deckCards = [...this.deckCards, ...deck];
         }
     }
+
+    clearHands() {
+        this.dealerSeat.cards.length = 0;
+        this.playerSeat.cards.length = 0;
+    }
 }

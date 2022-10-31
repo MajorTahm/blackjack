@@ -32,7 +32,7 @@ export default class ActionPanel extends Container {
         this.splitButton.interactive = true;
         this.splitButton.buttonMode = true;
         this.splitButton.on('pointerdown', () => {
-            app.tableState!.playerSeat.split()
+            app.bus.emit('split');
         })
         this.addChild(this.splitButton);
 
@@ -41,6 +41,9 @@ export default class ActionPanel extends Container {
         this.doubleButton.anchor.set(0.5);
         this.doubleButton.x = this.splitButton.x + this.doubleButton.width + 20;
         this.doubleButton.y = this.splitButton.y;
+        this.doubleButton.on('pointerdown', () => {
+            app.bus.emit('double');
+        })
         this.addChild(this.doubleButton)
 
         this.hitButton = new Sprite(Assets.cache.get('button_hit'));
@@ -48,6 +51,11 @@ export default class ActionPanel extends Container {
         this.hitButton.anchor.set(0.5)
         this.hitButton.x = this.doubleButton.x + this.doubleButton.width + 20;
         this.hitButton.y = this.doubleButton.y;
+        this.hitButton.interactive = true;
+        this.hitButton.buttonMode = true;
+        this.hitButton.on('pointerdown', () => {
+            app.bus.emit('hit');
+        })
         this.addChild(this.hitButton)
 
         this.standButton = new Sprite(Assets.cache.get('button_stand'));
@@ -58,7 +66,7 @@ export default class ActionPanel extends Container {
         this.standButton.interactive = true;
         this.standButton.buttonMode = true;
         this.standButton.on('pointerdown', () => {
-            clearHands([app.tableState!.dealerSeat, app.tableState!.playerSeat]);
+            app.bus.emit('stand');
         })
         this.addChild(this.standButton);
 
@@ -70,8 +78,7 @@ export default class ActionPanel extends Container {
         this.surrenderButton.interactive = true;
         this.surrenderButton.buttonMode = true;
         this.surrenderButton.on('pointerdown', () => {
-            app.tableState!.deal(app.tableState!.playerSeat);
-            app.tableState!.deal(app.tableState!.dealerSeat);
+            app.bus.emit('surrender');
         })
         this.addChild(this.surrenderButton);
     }

@@ -5,10 +5,13 @@
 /* eslint-disable import/prefer-default-export */
 import { Assets } from "@pixi/assets";
 import { Application, Sprite} from "pixi.js";
+import EventEmitter from 'eventemitter3';
 import GameScreen from "./app/GameScreen/GameScreen";
+import Table from "./app/GameScreen/Table";
 import Menu from "./app/Menu";
 import { PlayerState } from "./lib/states/PlayerState";
 import TableState from "./lib/states/TableState";
+import Promises from "./lib/Logic/gameFlow";
 
 // constants
 const SIZE = 720;
@@ -18,6 +21,12 @@ export class GameApp extends Application {
   tableState?: TableState;
   
   playerState?: PlayerState;
+
+  gameScreen?: GameScreen;
+
+  bus?: any;
+
+  promises?: any;
 
   constructor() {
     super({ 
@@ -62,8 +71,10 @@ export class GameApp extends Application {
     Assets.loadBundle(['Cards','interface_game','menu']).then(() => {
       this.tableState = new TableState();
       this.playerState = new PlayerState();
-      const board = new GameScreen();
-      app.stage.addChild(board);
+      this.bus = new EventEmitter() as EventEmitter;
+      this.gameScreen = new GameScreen();
+      this.promises = new Promises();
+      app.stage.addChild(this.gameScreen);
     })
     
   }
