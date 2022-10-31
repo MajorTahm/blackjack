@@ -2,7 +2,6 @@
 import { Assets } from "@pixi/assets";
 import { Container, Sprite } from "pixi.js";
 import { app } from "../../app";
-import { clearHands } from "../../lib/states/TableState";
 
 export default class ActionPanel extends Container {
 
