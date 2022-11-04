@@ -2,7 +2,7 @@
 import { Assets } from "@pixi/assets";
 import { Container, Graphics, Sprite, Text } from "pixi.js";
 import { app } from "../../../app";
-import { PlayerState } from "../../../lib/states/PlayerState";
+import PlayerState from "../../../lib/states/PlayerState";
 
 export default class Label extends Container {
 

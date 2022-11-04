@@ -3,7 +3,7 @@ import { makeAutoObservable } from "mobx"
 import { Sprite } from "pixi.js";
 import Card from "../../app/Card"
 
-export class PlayerState {
+export default class PlayerState {
     avatar: Sprite;
 
     PlayerName: string
@@ -61,5 +61,3 @@ export class PlayerState {
         this.mainCards.push(card);
     }
 }
-
-export const player1 = new PlayerState();

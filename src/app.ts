@@ -9,7 +9,7 @@ import EventEmitter from 'eventemitter3';
 import GameScreen from "./app/GameScreen/GameScreen";
 import Table from "./app/GameScreen/Table";
 import Menu from "./app/Menu";
-import { PlayerState } from "./lib/states/PlayerState";
+import PlayerState from "./lib/states/PlayerState";
 import TableState from "./lib/states/TableState";
 import Promises from "./lib/Logic/gameFlow";
 
@@ -43,7 +43,7 @@ export class GameApp extends Application {
   async init(): Promise<void> {
     await Assets.init({manifest: "./assets/manifest.json"});
   
-    Assets.backgroundLoadBundle(['Cards','interface_game','menu']);
+    Assets.backgroundLoadBundle(['Cards','interface_game','menu', 'chips', 'betmodal']);
     
     this.makeGameScreen();
     
@@ -68,7 +68,7 @@ export class GameApp extends Application {
   }
   
   async makeGameScreen(): Promise<void> {
-    Assets.loadBundle(['Cards','interface_game','menu']).then(() => {
+    Assets.loadBundle(['Cards','interface_game', 'menu', 'chips', 'betmodal']).then(() => {
       this.tableState = new TableState();
       this.playerState = new PlayerState();
       this.bus = new EventEmitter() as EventEmitter;

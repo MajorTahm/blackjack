@@ -1,6 +1,7 @@
+/* eslint-disable import/no-cycle */
 import { Assets } from "@pixi/assets";
 import { Container, Sprite, Text } from "pixi.js";
-import { player1 } from "../lib/states/PlayerState";
+import { app } from "../app";
 
 export default class PlayerPanel extends Container {
     
@@ -22,7 +23,7 @@ export default class PlayerPanel extends Container {
         this.Background = new Sprite(Assets.cache.get('player_panel'))
         this.addChild(this.Background);
 
-        this.nameText = new Text(`${player1.PlayerName}`, {
+        this.nameText = new Text(`${app.playerState!.PlayerName}`, {
             fontFamily: 'Bebas Neue',
             fontWeight: '700',
             fontSize: 60,
@@ -32,7 +33,7 @@ export default class PlayerPanel extends Container {
         this.nameText.y = this.Background.height/10;
         this.addChild(this.nameText);
 
-        this.LevelText = new Text(`${player1.PlayerLevel} Level`, {
+        this.LevelText = new Text(`${app.playerState!.PlayerLevel} Level`, {
             fontFamily: 'Bebas Neue',
             fontWeight: '700',
             fontSize: 60,
@@ -50,7 +51,7 @@ export default class PlayerPanel extends Container {
         this.BankIcon.y = this.Avatar.y + this.Avatar.height + 20;
         this.addChild(this.BankIcon);
 
-        this.BankText = new Text(`${player1.bank}`, {
+        this.BankText = new Text(`${app.playerState!.bank}`, {
             fontFamily: 'Bebas Neue',
             fontWeight: '700',
             fontSize: 48,

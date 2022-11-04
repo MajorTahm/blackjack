@@ -4,6 +4,7 @@ import { Container, Sprite } from "pixi.js";
 import { app } from "../../app";
 import ActionPanel from "./ActionPanel";
 import MoneyPanel from "./MoneyPanel";
+import BetModal from "./BetModal";
 import Table from "./Table";
 
 export default class GameScreen extends Container {
@@ -22,6 +23,7 @@ export default class GameScreen extends Container {
     
     settingsButton: Sprite;
 
+    betModal?: BetModal;
 
     constructor() {
         super()
@@ -70,7 +72,16 @@ export default class GameScreen extends Container {
         })
         this.addChild(this.exitButton);
 
-        this.settingsButton = new Sprite(Assets.cache.get('button_setting'))
+        this.settingsButton = new Sprite(Assets.cache.get('button_setting'));
 
+        this.showBetModal();
+    }
+
+    showBetModal() {
+
+        this.betModal = new BetModal();
+        this.betModal.scale.set(0.5);
+        this.addChild(this.betModal);
+        this.betModal.position.set(this.background.width/2 - this.betModal.width/2, this.background.height/2 - this.betModal.height/2);
     }
 }

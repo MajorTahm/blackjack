@@ -1,7 +1,8 @@
+/* eslint-disable import/no-cycle */
 import { Assets } from "@pixi/assets";
 import { autorun } from "mobx";
 import { Container, Sprite, Text } from "pixi.js";
-import { player1 } from "../../lib/states/PlayerState";
+import { app } from "../../app";
 
 const SCALE = 0.7;
 
@@ -86,7 +87,7 @@ export default class MoneyPanel extends Container {
         );
         this.addChild(this.bet)
 
-        this.balance = new Text(`$ ${player1.bank}`, {
+        this.balance = new Text(`$ ${app.playerState!.bank}`, {
             fontFamily: 'Bebas Neue',
             fontWeight: '700',
             fontSize: 60,
@@ -102,7 +103,7 @@ export default class MoneyPanel extends Container {
         this.addChild(this.balance);
 
         autorun(() => {
-            this.balance.text = player1.bank
+            this.balance.text = app.playerState!.bank
         })
     }
 }

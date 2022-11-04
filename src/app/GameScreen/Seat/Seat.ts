@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { autorun } from "mobx";
 import { Container } from "pixi.js";
-import { PlayerState } from "../../../lib/states/PlayerState";
+import PlayerState from "../../../lib/states/PlayerState";
 import { PlayerSeatSub, SeatSub } from "../../../lib/states/sub/SeatSub";
 import Label from "./Label";
 import ScoreBadge from "./ScoreBadge";
