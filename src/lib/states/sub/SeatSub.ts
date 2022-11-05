@@ -75,6 +75,10 @@ export class PlayerSeatSub {
         return countScore(this.cardsOff);
     }
 
+    setBet(value: number) {
+        this.bet = value;
+    }
+
     // !!!integrage with PlayerState to check for enough bank money to split!
     split(): void {
         if (this.cards.length === 2 && !this.handIsSplit && this.cardsOff.length === 0) {

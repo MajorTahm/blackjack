@@ -72,7 +72,7 @@ export default class MoneyPanel extends Container {
         )
         this.addChild(this.balanceTitle);
 
-        this.bet = new Text(`$ TODO`,  {
+        this.bet = new Text(`$ ${app.tableState!.playerSeat.bet}`,  {
             fontFamily: 'Bebas Neue',
             fontWeight: '700',
             fontSize: 60,
@@ -104,6 +104,7 @@ export default class MoneyPanel extends Container {
 
         autorun(() => {
             this.balance.text = app.playerState!.bank
+            this.bet.text = app.tableState!.playerSeat.bet
         })
     }
 }
