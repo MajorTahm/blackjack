@@ -1,5 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { Assets } from "@pixi/assets";
+import { autorun } from "mobx";
 import { Container, Graphics, Sprite, Text } from "pixi.js";
 import { app } from "../../../app";
 import PlayerState from "../../../lib/states/PlayerState";
@@ -62,5 +63,9 @@ export default class Label extends Container {
         this.bankText.x = this.nameText.x;
         this.bankText.y = this.nameText.y + this.bankText.height/2 + this.height/10* 2;
         this.addChild(this.bankText)
+
+        autorun(() => {
+            this.bankText.text = `$ ${app.playerState!.bank}`;
+        })
     }
 }
