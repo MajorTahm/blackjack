@@ -73,12 +73,14 @@ export default class GameScreen extends Container {
         this.addChild(this.exitButton);
 
         this.settingsButton = new Sprite(Assets.cache.get('button_setting'));
-
-        this.showBetModal();
     }
 
-    showBetModal() {
+    toggleBetModal() {
 
+        if (this.betModal) {
+            this.betModal.destroy();
+            return;
+        }
         this.betModal = new BetModal();
         this.betModal.scale.set(0.5);
         this.addChild(this.betModal);

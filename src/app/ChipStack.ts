@@ -1,39 +1,28 @@
 /* eslint-disable import/no-cycle */
-import { Assets } from "@pixi/assets";
 import { Container } from "pixi.js";
 import { ChipVal } from "../types";
 import Chip from "./Chip";
+
+const rotations = [0, 0.8, 0.6, 0.3, 0.4];
 
 export default class ChipStack extends Container {
 
     chips: Chip[];
     
-    val: ChipVal;
+    val?: ChipVal;
 
-    index: number;
-
-    amount: number;
-
-    constructor(val: ChipVal, amount: number, index: number) {
+    constructor(val?: ChipVal) {
         super();
-        this.amount = amount;
         this.val = val;
-        this.index = index;
         this.chips = [];
 
-        this.fillStack();
-        this.renderStack();
     }
 
-    fillStack(): void {
-        // eslint-disable-next-line no-plusplus
-        for (let i = 0; i < this.amount; i++) {
-          const chip = new Chip  (Assets.cache.get(`${this.val}`), this.val);
-        this.chips.push(chip);  
-        }
+    addChip(chip: Chip): void {;
+        this.chips.push(chip);
     }
 
-    // stack renders up to 5 chips but real amount of chips inside chipsArr is indefinite
+    // stack renders up to 5 chips
     renderStack(): void {
         if (this.chips.length === 0) return;
 
@@ -43,10 +32,22 @@ export default class ChipStack extends Container {
                 chip.y = 0 - 15 * i;
                 chip.anchor.set(0.5);
                 // eslint-disable-next-line no-param-reassign
-                chip.rotation = Math.random();
+                chip.rotation = rotations[i];
                 this.addChild(chip);
             }
         });
-        this.children.at(-1)!.rotation = 0;      
+        this.swapUpper();
+    }
+    
+    // Swaps the top rendered chip with the last of chips[]
+    swapUpper(): void {
+        
+        const lastChip = this.chips[this.chips.length - 1];
+        lastChip.anchor.set(0.5);
+        lastChip.rotation = 0;
+        lastChip.position.set(this.children[this.children.length - 1].position.x, this.children[this.children.length - 1].position.y);
+        this.removeChild(this.children[this.children.length - 1]);
+        this.addChild(lastChip);
     }
 }
+

@@ -22,6 +22,8 @@ export default class Promises {
 
     handlePress: Promise<string>;
 
+    confirmBet: Promise<void>;
+
     bus: EventEmitter;
 
     constructor() {
@@ -33,13 +35,20 @@ export default class Promises {
         this.tableState = app.tableState!;
         this.bus = app.bus;
         this.handlePress = handlePress(this);
+        this.confirmBet = confirmBet(this);
 
-        this.dealInitial()
+        this.openBetModal()
+        .then(() => this.dealInitial())
         .then(() => {
             this.setButtonsActive(true);
             this.handleAction();
         })
     }
+
+   async openBetModal(): Promise<void> {
+        app.gameScreen!.toggleBetModal();
+        return this.confirmBet;
+   }
 
     async dealInitial(): Promise<void> {
         this.tableState.clearHands();
@@ -83,6 +92,16 @@ const handlePress = (context: Promises) => {
         context.bus.once('split', () => {
             resolve('split');
         });
+        
+    })
+    return promise;
+}
+
+const confirmBet = (context: Promises) => {
+    const promise = new Promise<void> ((resolve) => {
+        context.bus.once('betConfirmed', () => {
+            resolve();
+        })
     })
     return promise;
 }
