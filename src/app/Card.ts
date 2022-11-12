@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
 import { Assets } from "@pixi/assets";

@@ -2,8 +2,16 @@
 import { Assets } from "@pixi/assets";
 import { makeAutoObservable } from "mobx";
 import Card from "../../app/Card";
-import { CardRank, CardSuit } from "../../types";
+import { CardRank, CardSuit, isPlayerSeatSub } from "../../types";
 import {SeatSub, PlayerSeatSub } from "./sub/SeatSub";
+
+// const stackDebug = (deckArr: Card[] = []): Card[] => {
+//     const deck = deckArr.slice();
+//     for (let i = 0; i < 50; i++) {
+//         deck.push(new Card(Assets.cache.get(`cardClubs3`), CardSuit.Clubs, CardRank.Three));
+//     }
+//     return deck;
+// }
 
 const stackDeck = (deckArr: Card[] = []): Card[] => {
     const deck = deckArr.slice();
@@ -58,6 +66,19 @@ export default class TableState {
             return;
         }
 
+        if (isPlayerSeatSub(seat) && seat.handIsSplit === true) {
+            seat.cards.push(this.deckCards.pop()!);
+            seat.cardsOff.push(this.deckCards.pop()!);
+
+            if (this.deckCards.length <= 4) {
+                const deck = shuffleDeck(stackDeck());
+    
+                this.deckCards = [...this.deckCards, ...deck];
+            }
+            console.log('dealt 2 cards to splits!');
+            return;
+        }
+
         const currentCard = this.deckCards.pop()!;
         
         if (seat.constructor.name === 'SeatSub' && seat.cards.length === 1) {
@@ -72,6 +93,7 @@ export default class TableState {
 
             this.deckCards = [...this.deckCards, ...deck];
         }
+        console.log('Dealt!')
     }
 
     clearHands() {
@@ -79,3 +101,4 @@ export default class TableState {
         this.playerSeat.cards.length = 0;
     }
 }
+

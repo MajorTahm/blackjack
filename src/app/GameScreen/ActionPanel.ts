@@ -29,7 +29,8 @@ export default class ActionPanel extends Container {
         this.splitButton.x = 200;
         this.splitButton.y = this.background.height*0.5;
         this.splitButton.on('pointerdown', () => {
-            app.bus.emit('split');
+            app.bus!.emit('split');
+            app.bus!.emit('action');
         })
         this.addChild(this.splitButton);
 
@@ -39,7 +40,8 @@ export default class ActionPanel extends Container {
         this.doubleButton.x = this.splitButton.x + this.doubleButton.width + 20;
         this.doubleButton.y = this.splitButton.y;
         this.doubleButton.on('pointerdown', () => {
-            app.bus.emit('double');
+            app.bus!.emit('double');
+            app.bus!.emit('action');
         })
         this.addChild(this.doubleButton)
 
@@ -49,7 +51,8 @@ export default class ActionPanel extends Container {
         this.hitButton.x = this.doubleButton.x + this.doubleButton.width + 20;
         this.hitButton.y = this.doubleButton.y;
         this.hitButton.on('pointerdown', () => {
-            app.bus.emit('hit');
+            app.bus!.emit('hit');
+            app.bus!.emit('action');
         })
         this.addChild(this.hitButton)
 
@@ -59,7 +62,8 @@ export default class ActionPanel extends Container {
         this.standButton.x = this.hitButton.x + this.hitButton.width + 20;
         this.standButton.y = this.doubleButton.y;
         this.standButton.on('pointerdown', () => {
-            app.bus.emit('stand');
+            app.bus!.emit('stand');
+            app.bus!.emit('action');
         })
         this.addChild(this.standButton);
 
@@ -69,7 +73,8 @@ export default class ActionPanel extends Container {
         this.surrenderButton.x = this.standButton.x + this.surrenderButton.width - 35;
         this.surrenderButton.y = this.doubleButton.y;
         this.surrenderButton.on('pointerdown', () => {
-            app.bus.emit('surrender');
+            app.bus!.emit('surrender');
+            app.bus!.emit('action');
         })
         this.addChild(this.surrenderButton);
     }

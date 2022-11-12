@@ -71,7 +71,7 @@ export default class BetModal extends Container {
         this.confirmBetButton.y = this.background.height - this.confirmBetButton.height*1.5;
         this.confirmBetButton.buttonMode = true;
         this.confirmBetButton.on('pointerdown', () => {
-            app.bus.emit('betConfirmed');
+            app.bus!.emit('betConfirmed');
             app.gameScreen?.toggleBetModal();
         })
         this.addChild(this.confirmBetButton);

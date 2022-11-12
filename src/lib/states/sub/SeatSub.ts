@@ -1,6 +1,9 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable max-classes-per-file */
 import { makeAutoObservable } from "mobx";
+import { app } from "../../../app";
 import Card from "../../../app/Card";
+import { PlayerCurrentPhase } from "../../../types";
 
 function countScore(cards: Card[]) {
     let sum = 0;
@@ -42,6 +45,9 @@ export class SeatSub {
 }
 
 export class PlayerSeatSub {
+
+    phase: PlayerCurrentPhase;
+
     cards: Card[];
 
     cardsOff: Card[];
@@ -53,6 +59,7 @@ export class PlayerSeatSub {
     betOff: number;
 
     constructor() {
+        this.phase = "inactive";
 
         this.handIsSplit = false;
 
@@ -81,9 +88,16 @@ export class PlayerSeatSub {
 
     // !!!integrage with PlayerState to check for enough bank money to split!
     split(): void {
-        if (this.cards.length === 2 && !this.handIsSplit && this.cardsOff.length === 0) {
+        if (this.cards.length === 2 && !this.handIsSplit && this.cardsOff.length === 0 && app.playerState!.bank >= this.bet) {
             this.handIsSplit = true;
             this.cardsOff.push(this.cards.pop()!);
+            app.playerState!.bank -= this.bet;
+            this.betOff = this.bet;
+            console.log('Split!');
         }
+    }
+
+    setPhase (phase: PlayerCurrentPhase): void {
+        this.phase = phase;
     }
 }

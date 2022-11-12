@@ -11,7 +11,7 @@ import Table from "./app/GameScreen/Table";
 import Menu from "./app/Menu";
 import PlayerState from "./lib/states/PlayerState";
 import TableState from "./lib/states/TableState";
-import Promises from "./lib/Logic/gameFlow";
+import Logic from "./lib/Logic/gameFlow2";
 
 // constants
 const SIZE = 720;
@@ -24,9 +24,9 @@ export class GameApp extends Application {
 
   gameScreen?: GameScreen;
 
-  bus?: any;
+  bus?: EventEmitter;
 
-  promises?: any;
+  logic?: Logic;
 
   constructor() {
     super({ 
@@ -71,9 +71,9 @@ export class GameApp extends Application {
     Assets.loadBundle(['Cards','interface_game', 'menu', 'chips', 'betmodal']).then(() => {
       this.tableState = new TableState();
       this.playerState = new PlayerState();
-      this.bus = new EventEmitter() as EventEmitter;
+      this.bus = new EventEmitter();
       this.gameScreen = new GameScreen();
-      this.promises = new Promises();
+      this.logic = new Logic();
       app.stage.addChild(this.gameScreen);
     })
     
